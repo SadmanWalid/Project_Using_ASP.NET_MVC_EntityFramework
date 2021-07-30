@@ -1,0 +1,209 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SchoolManagementDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="courseID" />
+          </Key>
+          <Property Name="courseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="50" />
+          <Property Name="credits" Type="int" />
+        </EntityType>
+        <EntityType Name="Enrollment">
+          <Key>
+            <PropertyRef Name="enrollmentID" />
+          </Key>
+          <Property Name="enrollmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="grade" Type="decimal" Precision="3" Scale="2" />
+          <Property Name="courseID" Type="int" Nullable="false" />
+          <Property Name="studentID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="studentID" />
+          </Key>
+          <Property Name="studentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="firstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="lastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="enrollmentDate" Type="datetime" />
+        </EntityType>
+        <Association Name="fk_dbo_Enrollment_dbo_Course_courseID">
+          <End Role="Course" Type="Self.Course" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Enrollment" Type="Self.Enrollment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="courseID" />
+            </Principal>
+            <Dependent Role="Enrollment">
+              <PropertyRef Name="courseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_dbo_Enrollment_dbo_Student_studentID">
+          <End Role="Student" Type="Self.Student" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Enrollment" Type="Self.Enrollment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="studentID" />
+            </Principal>
+            <Dependent Role="Enrollment">
+              <PropertyRef Name="studentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SchoolManagementDBModelStoreContainer">
+          <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Enrollment" EntityType="Self.Enrollment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_dbo_Enrollment_dbo_Course_courseID" Association="Self.fk_dbo_Enrollment_dbo_Course_courseID">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Enrollment" EntitySet="Enrollment" />
+          </AssociationSet>
+          <AssociationSet Name="fk_dbo_Enrollment_dbo_Student_studentID" Association="Self.fk_dbo_Enrollment_dbo_Student_studentID">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Enrollment" EntitySet="Enrollment" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SchoolManagementDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="courseID" />
+          </Key>
+          <Property Name="courseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="credits" Type="Int32" />
+          <NavigationProperty Name="Enrollments" Relationship="Self.fk_dbo_Enrollment_dbo_Course_courseID" FromRole="Course" ToRole="Enrollment" />
+        </EntityType>
+        <EntityType Name="Enrollment">
+          <Key>
+            <PropertyRef Name="enrollmentID" />
+          </Key>
+          <Property Name="enrollmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="grade" Type="Decimal" Precision="3" Scale="2" />
+          <Property Name="courseID" Type="Int32" Nullable="false" />
+          <Property Name="studentID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Course" Relationship="Self.fk_dbo_Enrollment_dbo_Course_courseID" FromRole="Enrollment" ToRole="Course" />
+          <NavigationProperty Name="Student" Relationship="Self.fk_dbo_Enrollment_dbo_Student_studentID" FromRole="Enrollment" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="studentID" />
+          </Key>
+          <Property Name="studentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="firstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="lastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="enrollmentDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Enrollments" Relationship="Self.fk_dbo_Enrollment_dbo_Student_studentID" FromRole="Student" ToRole="Enrollment" />
+        </EntityType>
+        <Association Name="fk_dbo_Enrollment_dbo_Course_courseID">
+          <End Role="Course" Type="Self.Course" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Enrollment" Type="Self.Enrollment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="courseID" />
+            </Principal>
+            <Dependent Role="Enrollment">
+              <PropertyRef Name="courseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_dbo_Enrollment_dbo_Student_studentID">
+          <End Role="Student" Type="Self.Student" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Enrollment" Type="Self.Enrollment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="studentID" />
+            </Principal>
+            <Dependent Role="Enrollment">
+              <PropertyRef Name="studentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SchoolManagementDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Courses" EntityType="Self.Course" />
+          <EntitySet Name="Enrollments" EntityType="Self.Enrollment" />
+          <EntitySet Name="Students" EntityType="Self.Student" />
+          <AssociationSet Name="fk_dbo_Enrollment_dbo_Course_courseID" Association="Self.fk_dbo_Enrollment_dbo_Course_courseID">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="Enrollment" EntitySet="Enrollments" />
+          </AssociationSet>
+          <AssociationSet Name="fk_dbo_Enrollment_dbo_Student_studentID" Association="Self.fk_dbo_Enrollment_dbo_Student_studentID">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="Enrollment" EntitySet="Enrollments" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SchoolManagementDBModelStoreContainer" CdmEntityContainer="SchoolManagementDBEntities">
+          <EntitySetMapping Name="Courses">
+            <EntityTypeMapping TypeName="SchoolManagementDBModel.Course">
+              <MappingFragment StoreEntitySet="Course">
+                <ScalarProperty Name="courseID" ColumnName="courseID" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="credits" ColumnName="credits" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Enrollments">
+            <EntityTypeMapping TypeName="SchoolManagementDBModel.Enrollment">
+              <MappingFragment StoreEntitySet="Enrollment">
+                <ScalarProperty Name="enrollmentID" ColumnName="enrollmentID" />
+                <ScalarProperty Name="grade" ColumnName="grade" />
+                <ScalarProperty Name="courseID" ColumnName="courseID" />
+                <ScalarProperty Name="studentID" ColumnName="studentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="SchoolManagementDBModel.Student">
+              <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="studentID" ColumnName="studentID" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="enrollmentDate" ColumnName="enrollmentDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

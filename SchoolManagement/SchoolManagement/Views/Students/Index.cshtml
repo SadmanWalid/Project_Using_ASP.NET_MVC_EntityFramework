@@ -14,13 +14,16 @@
 <table class="table">
     <tr>
         <th>
-            First Name
+            @Html.DisplayNameFor(model => model.firstName)
         </th>
         <th>
-            Lirst Name
+            @Html.DisplayNameFor(model => model.lastName)
         </th>
         <th>
-            Enrollment Date
+            @Html.DisplayNameFor(model =>model.middleName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.enrollmentDate) 
         </th>
         <th></th>
     </tr>
@@ -28,13 +31,16 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.firstName)
+            @Html.DisplayFor(m => item.firstName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.lastName)
+            @Html.DisplayFor(m => item.lastName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.enrollmentDate)
+            @Html.DisplayFor(m => item.middleName)
+        </td>
+        <td>
+            @Html.DisplayFor(m => item.enrollmentDate)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.studentID }) |

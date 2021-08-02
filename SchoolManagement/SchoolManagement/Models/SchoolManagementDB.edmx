@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SchoolManagementDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SchoolManagementDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Course">
           <Key>
             <PropertyRef Name="courseID" />
@@ -30,6 +30,7 @@
           <Property Name="firstName" Type="nvarchar" MaxLength="50" />
           <Property Name="lastName" Type="nvarchar" MaxLength="50" />
           <Property Name="enrollmentDate" Type="datetime" />
+          <Property Name="middleName" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <Association Name="fk_dbo_Enrollment_dbo_Course_courseID">
           <End Role="Course" Type="Self.Course" Multiplicity="1">
@@ -72,8 +73,7 @@
             <End Role="Enrollment" EntitySet="Enrollment" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SchoolManagementDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -106,6 +106,7 @@
           <Property Name="lastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="enrollmentDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Enrollments" Relationship="Self.fk_dbo_Enrollment_dbo_Student_studentID" FromRole="Student" ToRole="Enrollment" />
+          <Property Name="middleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="fk_dbo_Enrollment_dbo_Course_courseID">
           <End Role="Course" Type="Self.Course" Multiplicity="1">
@@ -176,6 +177,7 @@
           <EntitySetMapping Name="Students">
             <EntityTypeMapping TypeName="SchoolManagementDBModel.Student">
               <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="middleName" ColumnName="middleName" />
                 <ScalarProperty Name="studentID" ColumnName="studentID" />
                 <ScalarProperty Name="firstName" ColumnName="firstName" />
                 <ScalarProperty Name="lastName" ColumnName="lastName" />

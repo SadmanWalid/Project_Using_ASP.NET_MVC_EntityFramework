@@ -48,7 +48,11 @@ namespace SchoolManagement.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "courseID,title,credits")] Course course)
         {
-            if (ModelState.IsValid)
+            
+            
+                
+
+            if (ModelState.IsValid )
             {
                 db.Courses.Add(course);
                 db.SaveChanges();

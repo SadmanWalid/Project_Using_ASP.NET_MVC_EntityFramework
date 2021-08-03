@@ -11,8 +11,7 @@ namespace SchoolManagement.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Student
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,13 +21,9 @@ namespace SchoolManagement.Models
         }
     
         public int studentID { get; set; }
-        [Display (Name ="First Name")]
         public string firstName { get; set; }
-        [Display(Name = "Last Name")]
         public string lastName { get; set; }
-        [Display(Name = "Enrollment Date")]
-        public Nullable<System.DateTime> enrollmentDate { get; set; }
-        [Display(Name = "Middle Name")]
+        public System.DateTime enrollmentDate { get; set; }
         public string middleName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

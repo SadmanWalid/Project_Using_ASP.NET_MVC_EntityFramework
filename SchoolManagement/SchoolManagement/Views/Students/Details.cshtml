@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Student Details</h2>
 
 <div>
     <h4>Student</h4>
@@ -27,7 +27,7 @@
             @Html.DisplayFor(model => model.lastName)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model =>model.middleName)
+            @Html.DisplayNameFor(model => model.middleName)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.middleName)
@@ -41,6 +41,49 @@
         </dd>
 
     </dl>
+
+    <div>
+        <table class="table  table-responsive table-striped table-bordered text-center">
+
+            <tr class="text-center">
+                <th>
+                    <p class="text-center">
+                        Course Name
+                    </p>
+                </th>
+                <th>
+                    <p class="text-center">
+                        Credits
+                    </p>
+                </th>
+                <th>
+                    <p class="text-center">
+                        Grade
+                    </p>
+                </th>
+            </tr>
+
+            @foreach (var enrollment in Model.Enrollments)
+            {
+
+                <tr>
+                    <td>
+                        @enrollment.Course.title
+                    </td>
+                    <td>
+                        @enrollment.Course.credits
+                    </td>
+                    <td>
+                        @enrollment.grade
+                    </td>
+
+                </tr>
+
+            }
+
+        </table>
+
+    </div>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.studentID }) |

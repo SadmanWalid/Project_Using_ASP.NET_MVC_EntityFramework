@@ -5,8 +5,8 @@
       <PropertyRef Name="courseID" />
     </Key>
     <Property Name="courseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="title" Type="nvarchar" MaxLength="50" />
-    <Property Name="credits" Type="int" />
+    <Property Name="title" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="credits" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Enrollment">
     <Key>
@@ -22,10 +22,10 @@
       <PropertyRef Name="studentID" />
     </Key>
     <Property Name="studentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="firstName" Type="nvarchar" MaxLength="50" />
-    <Property Name="lastName" Type="nvarchar" MaxLength="50" />
-    <Property Name="enrollmentDate" Type="datetime" />
-    <Property Name="middleName" Type="nvarchar" MaxLength="50" />
+    <Property Name="firstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="lastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="enrollmentDate" Type="datetime" Nullable="false" />
+    <Property Name="middleName" Type="nvarchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <Association Name="fk_dbo_Enrollment_dbo_Course_courseID">
     <End Role="Course" Type="Self.Course" Multiplicity="1">

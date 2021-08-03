@@ -10,8 +10,8 @@
             <PropertyRef Name="courseID" />
           </Key>
           <Property Name="courseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="title" Type="nvarchar" MaxLength="50" />
-          <Property Name="credits" Type="int" />
+          <Property Name="title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="credits" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Enrollment">
           <Key>
@@ -27,10 +27,10 @@
             <PropertyRef Name="studentID" />
           </Key>
           <Property Name="studentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="firstName" Type="nvarchar" MaxLength="50" />
-          <Property Name="lastName" Type="nvarchar" MaxLength="50" />
-          <Property Name="enrollmentDate" Type="datetime" />
-          <Property Name="middleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="firstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="lastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="enrollmentDate" Type="datetime" Nullable="false" />
+          <Property Name="middleName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <Association Name="fk_dbo_Enrollment_dbo_Course_courseID">
           <End Role="Course" Type="Self.Course" Multiplicity="1">
@@ -82,8 +82,8 @@
             <PropertyRef Name="courseID" />
           </Key>
           <Property Name="courseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="credits" Type="Int32" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="credits" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Enrollments" Relationship="Self.fk_dbo_Enrollment_dbo_Course_courseID" FromRole="Course" ToRole="Enrollment" />
         </EntityType>
         <EntityType Name="Enrollment">
@@ -102,11 +102,11 @@
             <PropertyRef Name="studentID" />
           </Key>
           <Property Name="studentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="firstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="lastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="enrollmentDate" Type="DateTime" Precision="3" />
+          <Property Name="firstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="lastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="enrollmentDate" Type="DateTime" Precision="3" Nullable="false" />
           <NavigationProperty Name="Enrollments" Relationship="Self.fk_dbo_Enrollment_dbo_Student_studentID" FromRole="Student" ToRole="Enrollment" />
-          <Property Name="middleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="middleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <Association Name="fk_dbo_Enrollment_dbo_Course_courseID">
           <End Role="Course" Type="Self.Course" Multiplicity="1">

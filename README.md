@@ -1,1 +1,1 @@
-# Project_Using_ASP.NET_MVC_EntityFramework
+# Project is developed using ASP.NET MVC, EntityFramework.

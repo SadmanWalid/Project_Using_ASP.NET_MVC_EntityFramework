@@ -10,11 +10,13 @@ using SchoolManagement.Models;
 
 namespace SchoolManagement.Controllers
 {
+    [Authorize]
     public class StudentsController : Controller
     {
 
         private readonly SchoolManagementDBEntities db = new SchoolManagementDBEntities();
         // GET: Students
+        [AllowAnonymous]
         public ActionResult Index()
         {
             return View(db.Students.ToList());

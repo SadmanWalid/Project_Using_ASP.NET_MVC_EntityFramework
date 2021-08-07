@@ -50,9 +50,8 @@ namespace SchoolManagement.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "User Name")]
+        public string Username { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -69,6 +68,12 @@ namespace SchoolManagement.Models
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+
+        [Required]
+        [Display(Name ="User Name")]
+        public String Username { get; set; }
+
+
         [Required]
         [DataType(DataType.DateTime)]
         [Display(Name ="Date of Birth")]
@@ -82,9 +87,13 @@ namespace SchoolManagement.Models
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
+        [Display(Name = "Confirm Password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [Display(Name ="User Role")]
+        public String userRole { get; set; }
     }
 
     public class ResetPasswordViewModel

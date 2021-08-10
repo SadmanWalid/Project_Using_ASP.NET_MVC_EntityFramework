@@ -49,6 +49,24 @@ namespace SchoolManagement.Models
     {
 
     }
+    public class TeacherMetaClass
+    {
+        [Required(AllowEmptyStrings =false)]
+        [Display(Name ="First Name")]
+        [StringLength(50,MinimumLength =3)]
+        public string firstName { get; set; }
+        [Required(AllowEmptyStrings = false)]
+        [Display(Name = "Last Name")]
+        [StringLength(50, MinimumLength = 3)]
+        public string lastName { get; set; }
+
+    }
+
+    [MetadataType(typeof(TeacherMetaClass))]
+    public partial class Teacher
+    {
+
+    }
 
 
 }

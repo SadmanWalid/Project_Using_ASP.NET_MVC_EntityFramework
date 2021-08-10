@@ -21,6 +21,7 @@
           <Property Name="grade" Type="decimal" Precision="3" Scale="2" />
           <Property Name="courseID" Type="int" Nullable="false" />
           <Property Name="studentID" Type="int" Nullable="false" />
+          <Property Name="teacherID" Type="int" />
         </EntityType>
         <EntityType Name="Student">
           <Key>
@@ -31,6 +32,14 @@
           <Property Name="lastName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="enrollmentDate" Type="datetime" Nullable="false" />
           <Property Name="middleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="teacherID" />
+          </Key>
+          <Property Name="teacherID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="firstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="lastName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <Association Name="fk_dbo_Enrollment_dbo_Course_courseID">
           <End Role="Course" Type="Self.Course" Multiplicity="1">
@@ -60,16 +69,35 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_dbo_Enrollment_dbo_Teacher_teacherID">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Enrollment" Type="Self.Enrollment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="teacherID" />
+            </Principal>
+            <Dependent Role="Enrollment">
+              <PropertyRef Name="teacherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="SchoolManagementDBModelStoreContainer">
           <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Enrollment" EntityType="Self.Enrollment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teacher" EntityType="Self.Teacher" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="fk_dbo_Enrollment_dbo_Course_courseID" Association="Self.fk_dbo_Enrollment_dbo_Course_courseID">
             <End Role="Course" EntitySet="Course" />
             <End Role="Enrollment" EntitySet="Enrollment" />
           </AssociationSet>
           <AssociationSet Name="fk_dbo_Enrollment_dbo_Student_studentID" Association="Self.fk_dbo_Enrollment_dbo_Student_studentID">
             <End Role="Student" EntitySet="Student" />
+            <End Role="Enrollment" EntitySet="Enrollment" />
+          </AssociationSet>
+          <AssociationSet Name="fk_dbo_Enrollment_dbo_Teacher_teacherID" Association="Self.fk_dbo_Enrollment_dbo_Teacher_teacherID">
+            <End Role="Teacher" EntitySet="Teacher" />
             <End Role="Enrollment" EntitySet="Enrollment" />
           </AssociationSet>
         </EntityContainer>
@@ -81,7 +109,7 @@
           <Key>
             <PropertyRef Name="courseID" />
           </Key>
-          <Property Name="courseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="courseID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
           <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="credits" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Enrollments" Relationship="Self.fk_dbo_Enrollment_dbo_Course_courseID" FromRole="Course" ToRole="Enrollment" />
@@ -96,6 +124,8 @@
           <Property Name="studentID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Course" Relationship="Self.fk_dbo_Enrollment_dbo_Course_courseID" FromRole="Enrollment" ToRole="Course" />
           <NavigationProperty Name="Student" Relationship="Self.fk_dbo_Enrollment_dbo_Student_studentID" FromRole="Enrollment" ToRole="Student" />
+          <Property Name="teacherID" Type="Int32" />
+          <NavigationProperty Name="Teacher" Relationship="SchoolManagementDBModel.fk_dbo_Enrollment_dbo_Teacher_teacherID" FromRole="Enrollment" ToRole="Teacher" />
         </EntityType>
         <EntityType Name="Student">
           <Key>
@@ -109,10 +139,10 @@
           <Property Name="middleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <Association Name="fk_dbo_Enrollment_dbo_Course_courseID">
-          <End Role="Course" Type="Self.Course" Multiplicity="1">
+          <End Type="Self.Course" Multiplicity="1" Role="Course">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Enrollment" Type="Self.Enrollment" Multiplicity="*" />
+          <End Type="Self.Enrollment" Multiplicity="*" Role="Enrollment" />
           <ReferentialConstraint>
             <Principal Role="Course">
               <PropertyRef Name="courseID" />
@@ -123,10 +153,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_dbo_Enrollment_dbo_Student_studentID">
-          <End Role="Student" Type="Self.Student" Multiplicity="1">
+          <End Type="Self.Student" Multiplicity="1" Role="Student">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Enrollment" Type="Self.Enrollment" Multiplicity="*" />
+          <End Type="Self.Enrollment" Multiplicity="*" Role="Enrollment" />
           <ReferentialConstraint>
             <Principal Role="Student">
               <PropertyRef Name="studentID" />
@@ -141,14 +171,42 @@
           <EntitySet Name="Enrollments" EntityType="Self.Enrollment" />
           <EntitySet Name="Students" EntityType="Self.Student" />
           <AssociationSet Name="fk_dbo_Enrollment_dbo_Course_courseID" Association="Self.fk_dbo_Enrollment_dbo_Course_courseID">
-            <End Role="Course" EntitySet="Courses" />
-            <End Role="Enrollment" EntitySet="Enrollments" />
+            <End EntitySet="Courses" Role="Course" />
+            <End EntitySet="Enrollments" Role="Enrollment" />
           </AssociationSet>
           <AssociationSet Name="fk_dbo_Enrollment_dbo_Student_studentID" Association="Self.fk_dbo_Enrollment_dbo_Student_studentID">
-            <End Role="Student" EntitySet="Students" />
+            <End EntitySet="Students" Role="Student" />
+            <End EntitySet="Enrollments" Role="Enrollment" />
+          </AssociationSet>
+          <EntitySet Name="Teachers" EntityType="SchoolManagementDBModel.Teacher" />
+          <AssociationSet Name="fk_dbo_Enrollment_dbo_Teacher_teacherID" Association="SchoolManagementDBModel.fk_dbo_Enrollment_dbo_Teacher_teacherID">
+            <End Role="Teacher" EntitySet="Teachers" />
             <End Role="Enrollment" EntitySet="Enrollments" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="teacherID" />
+          </Key>
+          <Property Name="teacherID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="firstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="lastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Enrollments" Relationship="SchoolManagementDBModel.fk_dbo_Enrollment_dbo_Teacher_teacherID" FromRole="Teacher" ToRole="Enrollment" />
+        </EntityType>
+        <Association Name="fk_dbo_Enrollment_dbo_Teacher_teacherID">
+          <End Type="SchoolManagementDBModel.Teacher" Role="Teacher" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="SchoolManagementDBModel.Enrollment" Role="Enrollment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="teacherID" />
+            </Principal>
+            <Dependent Role="Enrollment">
+              <PropertyRef Name="teacherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -167,6 +225,7 @@
           <EntitySetMapping Name="Enrollments">
             <EntityTypeMapping TypeName="SchoolManagementDBModel.Enrollment">
               <MappingFragment StoreEntitySet="Enrollment">
+                <ScalarProperty Name="teacherID" ColumnName="teacherID" />
                 <ScalarProperty Name="enrollmentID" ColumnName="enrollmentID" />
                 <ScalarProperty Name="grade" ColumnName="grade" />
                 <ScalarProperty Name="courseID" ColumnName="courseID" />
@@ -182,6 +241,15 @@
                 <ScalarProperty Name="firstName" ColumnName="firstName" />
                 <ScalarProperty Name="lastName" ColumnName="lastName" />
                 <ScalarProperty Name="enrollmentDate" ColumnName="enrollmentDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teachers">
+            <EntityTypeMapping TypeName="SchoolManagementDBModel.Teacher">
+              <MappingFragment StoreEntitySet="Teacher">
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="teacherID" ColumnName="teacherID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

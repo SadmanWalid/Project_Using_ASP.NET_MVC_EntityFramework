@@ -13,6 +13,7 @@
     <EntitySetMapping Name="Enrollments">
       <EntityTypeMapping TypeName="SchoolManagementDBModel.Enrollment">
         <MappingFragment StoreEntitySet="Enrollment">
+          <ScalarProperty Name="teacherID" ColumnName="teacherID" />
           <ScalarProperty Name="enrollmentID" ColumnName="enrollmentID" />
           <ScalarProperty Name="grade" ColumnName="grade" />
           <ScalarProperty Name="courseID" ColumnName="courseID" />
@@ -28,6 +29,15 @@
           <ScalarProperty Name="firstName" ColumnName="firstName" />
           <ScalarProperty Name="lastName" ColumnName="lastName" />
           <ScalarProperty Name="enrollmentDate" ColumnName="enrollmentDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Teachers">
+      <EntityTypeMapping TypeName="SchoolManagementDBModel.Teacher">
+        <MappingFragment StoreEntitySet="Teacher">
+          <ScalarProperty Name="lastName" ColumnName="lastName" />
+          <ScalarProperty Name="firstName" ColumnName="firstName" />
+          <ScalarProperty Name="teacherID" ColumnName="teacherID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -106,3 +106,6 @@ D:\user\Coding\Codes\Udemy\Local repo for udemy\Project_Using_ASP.NET_MVC_Entity
 D:\user\Coding\Codes\Udemy\Local repo for udemy\Project_Using_ASP.NET_MVC_EntityFramework\SchoolManagement\SchoolManagement\obj\Debug\SchoolManagement.csproj.CopyComplete
 D:\user\Coding\Codes\Udemy\Local repo for udemy\Project_Using_ASP.NET_MVC_EntityFramework\SchoolManagement\SchoolManagement\obj\Debug\SchoolManagement.dll
 D:\user\Coding\Codes\Udemy\Local repo for udemy\Project_Using_ASP.NET_MVC_EntityFramework\SchoolManagement\SchoolManagement\obj\Debug\SchoolManagement.pdb
+D:\user\Coding\Codes\Udemy\Local repo for udemy\Project_Using_ASP.NET_MVC_EntityFramework\SchoolManagement\SchoolManagement\obj\Debug\SchoolManagement.Migrations.InitialCreate.resources
+D:\user\Coding\Codes\Udemy\Local repo for udemy\Project_Using_ASP.NET_MVC_EntityFramework\SchoolManagement\SchoolManagement\obj\Debug\SchoolManagement.csproj.GenerateResource.cache
+D:\user\Coding\Codes\Udemy\Local repo for udemy\Project_Using_ASP.NET_MVC_EntityFramework\SchoolManagement\SchoolManagement\obj\Debug\SchoolManagement.Migrations.AddedBirthDate.resources

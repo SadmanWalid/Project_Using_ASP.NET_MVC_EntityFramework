@@ -16,6 +16,7 @@
     <Property Name="grade" Type="decimal" Precision="3" Scale="2" />
     <Property Name="courseID" Type="int" Nullable="false" />
     <Property Name="studentID" Type="int" Nullable="false" />
+    <Property Name="teacherID" Type="int" />
   </EntityType>
   <EntityType Name="Student">
     <Key>
@@ -26,6 +27,14 @@
     <Property Name="lastName" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="enrollmentDate" Type="datetime" Nullable="false" />
     <Property Name="middleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Teacher">
+    <Key>
+      <PropertyRef Name="teacherID" />
+    </Key>
+    <Property Name="teacherID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="firstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="lastName" Type="nvarchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <Association Name="fk_dbo_Enrollment_dbo_Course_courseID">
     <End Role="Course" Type="Self.Course" Multiplicity="1">
@@ -55,16 +64,35 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="fk_dbo_Enrollment_dbo_Teacher_teacherID">
+    <End Role="Teacher" Type="Self.Teacher" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Enrollment" Type="Self.Enrollment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teacher">
+        <PropertyRef Name="teacherID" />
+      </Principal>
+      <Dependent Role="Enrollment">
+        <PropertyRef Name="teacherID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="SchoolManagementDBModelStoreContainer">
     <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Enrollment" EntityType="Self.Enrollment" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Teacher" EntityType="Self.Teacher" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="fk_dbo_Enrollment_dbo_Course_courseID" Association="Self.fk_dbo_Enrollment_dbo_Course_courseID">
       <End Role="Course" EntitySet="Course" />
       <End Role="Enrollment" EntitySet="Enrollment" />
     </AssociationSet>
     <AssociationSet Name="fk_dbo_Enrollment_dbo_Student_studentID" Association="Self.fk_dbo_Enrollment_dbo_Student_studentID">
       <End Role="Student" EntitySet="Student" />
+      <End Role="Enrollment" EntitySet="Enrollment" />
+    </AssociationSet>
+    <AssociationSet Name="fk_dbo_Enrollment_dbo_Teacher_teacherID" Association="Self.fk_dbo_Enrollment_dbo_Teacher_teacherID">
+      <End Role="Teacher" EntitySet="Teacher" />
       <End Role="Enrollment" EntitySet="Enrollment" />
     </AssociationSet>
   </EntityContainer>

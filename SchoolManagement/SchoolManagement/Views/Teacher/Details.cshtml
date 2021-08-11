@@ -25,11 +25,15 @@
 
         <dd>
             @Html.DisplayFor(model => model.lastName)
+
         </dd>
 
+       
     </dl>
+  
 </div>
+
+<p> @Html.ActionLink("Edit", "Edit", new { id = Model.teacherID }, new { @class = "btn btn-info" })</p>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.teacherID }) |
-    @Html.ActionLink("Back to List", "Index")
+ @Html.ActionLink("Back to List", "Index","Teacher", new { @class = "btn btn-primary" })
 </p>

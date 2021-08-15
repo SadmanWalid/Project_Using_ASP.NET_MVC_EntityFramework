@@ -1,0 +1,85 @@
+﻿@model SchoolManagement.Models.Enrollment
+
+@{
+    ViewBag.Title = "Create New Enrollment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+    $(
+        function () {
+
+            $("#Student_firstName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/Enrollments/GetStudents",
+                        dataType: "json",
+                        type: "POST",
+                        data: {
+                            term: request.term
+                        },
+                        success: function (data) {
+                            console.log(data);
+                            response($.map(data, function (item) {
+                                return { label: item.name, value: item.name, id: item.id };
+                            }))
+                        }
+                    });
+                },
+                minLength: 2,
+                select: function (event, query) {
+                    console.log(query);
+                    $("#studentID").val(query.item.id);
+                }
+            });
+
+
+        }
+    );
+</script>
+
+
+
+
+
+<h2>Create New Enrollment</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Enter Enrollment Details</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+       
+        <div class="form-group">
+            @Html.LabelFor(model => model.courseID,  htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("courseID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.courseID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.studentID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Student.firstName, new { htmlAttribute = new { @class="form-control" } })
+                @Html.HiddenFor(model => model.studentID)
+                @Html.ValidationMessageFor(model => model.studentID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index","Enrollment", new { @class="btn btn-info"})
+</div>

@@ -68,5 +68,29 @@ namespace SchoolManagement.Models
 
     }
 
+    public class EnrollmentMetaClass
+    {
+     
+        [Display(Name ="Grade")]
+        public decimal grade { get; set; }
+        
+        [Required]
+        [Display(Name ="Course")]
+        public int courseID { get; set; }
+
+        [Required]
+        [Display(Name = "Student")]
+        public int studentID { get; set; }
+    
+        [Display(Name ="Teacher")]
+
+        public int teacherID { get; set; }
+    }
+
+    [MetadataType(typeof(EnrollmentMetaClass))]
+    public partial class Enrollment
+    {
+
+    }
 
 }

@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title -School Management System</title>
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/jqueryui")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jquery-ui")
+    @Scripts.Render("~/bundles/bootstrap")
 
 </head>
 <body>
@@ -25,6 +29,7 @@
                     <li>@Html.ActionLink("Courses","index","Courses")</li>
                     <li>@Html.ActionLink("Students","index","Students")</li>
                     <li>@Html.ActionLink("Teacher","Index","Teacher")</li>
+                    <li>@Html.ActionLink("Enrollments","Index","Enrollments")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -38,8 +43,7 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+   
     @RenderSection("scripts", required: false)
 </body>
 </html>

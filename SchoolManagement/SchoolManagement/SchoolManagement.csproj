@@ -285,6 +285,7 @@
       <DependentUpon>SchoolManagementDB.edmx</DependentUpon>
       <LastGenOutput>SchoolManagementDB.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\AddedScripts\scriptsForLayout.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <EntityDeploy Include="Models\SchoolManagementDB.edmx">

@@ -1,0 +1,173 @@
+﻿@model SchoolManagement.Models.Enrollment
+
+@{
+    ViewBag.Title = "Create New Enrollment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+
+
+
+
+
+
+
+          $(function () {
+
+           var cID = $('#courseID').val();
+              ShowEnrollments(cID);
+              $('#courseID').change(function () {
+
+                  var cID = $('#courseID').val();
+                  ShowEnrollments(cID);
+
+              });
+
+           function ShowEnrollments(cID) {
+
+                    $.ajax({
+            url: '@Url.Action("EnrollmentPartial","Enrollments")',
+            dataType: 'html',
+            contentType: 'application/html; charset=utf-8',
+            type: 'GET',
+            data: {
+                courseID:cID
+            },
+            success: function (data) {
+                $('#enrollments').fadeOut().html(data).fadeIn();
+            }
+
+
+
+        });
+
+              }
+
+
+
+
+
+          });
+
+
+
+    //success or failure message
+    function Added(res) {
+        if (res.IsSuccess) {
+            $(function () {
+
+                $("#success").html(res.Message);
+                $("#failed").fadeOut('fast');
+                $("#success").fadeIn();
+                var cID = $('#courseID').val();
+                console.log(cID);
+                ShowEnrollments(cID);
+            })
+        }
+
+        else {
+            Failed(res);
+
+        }
+    }
+     function ShowEnrollments(cID) {
+
+                    $.ajax({
+            url: '@Url.Action("EnrollmentPartial","Enrollments")',
+            dataType: 'html',
+            contentType: 'application/html; charset=utf-8',
+            type: 'GET',
+            data: {
+                courseID:cID
+            },
+            success: function (data) {
+                $('#enrollments').fadeOut().html(data).fadeIn();
+            }
+
+
+
+        });
+
+              }
+    function Failure(res) {
+        Failed(res);
+    }
+    function Failed(res) {
+        $(function () {
+            $("#failed").html(res.Message);
+            $("#success").fadeOut('fast');
+            $("#failed").fadeIn();
+            
+        })
+    }
+
+
+
+
+
+</script>
+
+
+
+
+
+<h2>Create New Enrollment</h2>
+
+@using (Ajax.BeginForm("AddStudents","Enrollments", new AjaxOptions { 
+  
+    HttpMethod="POST",
+    OnSuccess="Added",
+    OnFailure="Failure"
+
+
+}))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Enter Enrollment Details</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div id="success" class="alert alert-success" style="display:none">
+
+        </div>
+
+        <div id="failed" class="alert alert-danger" style="display:none"></div>
+       
+        <div class="form-group">
+            @Html.LabelFor(model => model.courseID,  htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("courseID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.courseID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.studentID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Student.firstName, new { htmlAttribute = new { @class="form-control" } })
+                @Html.HiddenFor(model => model.studentID)
+                @Html.ValidationMessageFor(model => model.studentID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<hr />
+
+<div id="enrollments"></div>
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index","Enrollment", new { @class="btn btn-info"})
+</div>

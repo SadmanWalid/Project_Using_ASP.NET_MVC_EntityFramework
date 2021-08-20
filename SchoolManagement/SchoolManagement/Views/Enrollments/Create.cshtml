@@ -6,41 +6,106 @@
 }
 
 <script>
-   
 
-        function Added(res) {
-            if (res.IsSuccess) {
-                $(function () {
 
-                    $("#success").html(res.Message);
-                    $("#success").fadeIn('fast');
-                    $("#failed").fadeOut('fast');
-                })
-             }
-              
-            else {
-                Failed(res);
-               
+
+
+
+
+
+          $(function () {
+
+           var cID = $('#courseID').val();
+              ShowEnrollments(cID);
+              $('#courseID').change(function () {
+
+                  var cID = $('#courseID').val();
+                  ShowEnrollments(cID);
+
+              });
+
+           function ShowEnrollments(cID) {
+
+                    $.ajax({
+            url: '@Url.Action("EnrollmentPartial","Enrollments")',
+            dataType: 'html',
+            contentType: 'application/html; charset=utf-8',
+            type: 'GET',
+            data: {
+                courseID:cID
+            },
+            success: function (data) {
+                $('#enrollments').fadeOut().html(data).fadeIn();
             }
-        }
-        function Failure(res) {
-            Failed(res);
-        }
-        function Failed(res) {
+
+
+
+        });
+
+              }
+
+
+
+
+
+          });
+
+
+
+    //success or failure message
+    function Added(res) {
+        if (res.IsSuccess) {
             $(function () {
-                $("#failed").html(res.Message);
-                $("#failed").fadeIn('fast');
-                $("#success").fadeOut('fast');
+
+                $("#success").html(res.Message);
+                $("#failed").fadeOut('fast');
+                $("#success").fadeIn();
+                var cID = $('#courseID').val();
+                console.log(cID);
+                ShowEnrollments(cID);
             })
         }
 
-       
- 
+        else {
+            Failed(res);
+
+        }
+    }
+     function ShowEnrollments(cID) {
+
+                    $.ajax({
+            url: '@Url.Action("EnrollmentPartial","Enrollments")',
+            dataType: 'html',
+            contentType: 'application/html; charset=utf-8',
+            type: 'GET',
+            data: {
+                courseID:cID
+            },
+            success: function (data) {
+                $('#enrollments').fadeOut().html(data).fadeIn();
+            }
 
 
-  
 
-      
+        });
+
+              }
+    function Failure(res) {
+        Failed(res);
+    }
+    function Failed(res) {
+        $(function () {
+            $("#failed").html(res.Message);
+            $("#success").fadeOut('fast');
+            $("#failed").fadeIn();
+            
+        })
+    }
+
+
+
+
+
 </script>
 
 
@@ -97,6 +162,11 @@
         </div>
     </div>
 }
+
+<hr />
+
+<div id="enrollments"></div>
+
 
 <div>
     @Html.ActionLink("Back to List", "Index","Enrollment", new { @class="btn btn-info"})

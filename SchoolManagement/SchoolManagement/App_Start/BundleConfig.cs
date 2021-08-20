@@ -27,8 +27,11 @@ namespace SchoolManagement
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js"));
+           
             bundles.Add(new ScriptBundle("~/bundles/addedScripts").Include(
                 "~/Scripts/AddedScripts/scriptsForLayout.js"));
+           
+            
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

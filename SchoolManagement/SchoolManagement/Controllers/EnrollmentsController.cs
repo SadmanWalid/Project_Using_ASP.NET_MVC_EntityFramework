@@ -13,7 +13,7 @@ namespace SchoolManagement.Controllers
 {
     public class EnrollmentsController : Controller
     {
-        private SchoolManagementDBEntities db = new SchoolManagementDBEntities();
+        private readonly SchoolManagementDBEntities  db = new SchoolManagementDBEntities();
 
         // GET: Enrollments
         public ActionResult Index()
@@ -143,6 +143,9 @@ namespace SchoolManagement.Controllers
             return Json(students, JsonRequestBehavior.AllowGet);
         }
 
+
+
+        // Action for Create  Enrollment View( ajax form)
         [HttpPost]
 
         public async Task<JsonResult> AddStudents([Bind(Include ="courseID,studentID")] Enrollment enrolment)
@@ -173,6 +176,19 @@ namespace SchoolManagement.Controllers
             }
         
         }
+
+        //Action for EnrollmentPartial
+
+        public PartialViewResult EnrollmentPartial(int? courseID)
+        {
+            var enrollments = db.Enrollments.Where(q => q.courseID == courseID)
+                .Include(e => e.Student)
+                .Include(e => e.Course);
+            return PartialView(enrollments.ToList());
+            
+        }
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using SchoolManagement.Models;
@@ -139,9 +140,39 @@ namespace SchoolManagement.Controllers
                 id = q.studentID
             }).Where(q => q.name.Contains(term));
 
-            return Json(students,JsonRequestBehavior.AllowGet);
+            return Json(students, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+
+        public async Task<JsonResult> AddStudents([Bind(Include ="courseID,studentID")] Enrollment enrolment)
+        {
+            try
+            {
+                var IsEnrolled = db.Enrollments.Any(q => q.courseID == enrolment.courseID && q.studentID == enrolment.studentID);
+
+                if(ModelState.IsValid && !IsEnrolled)
+                {
+                    db.Enrollments.Add(enrolment);
+                    await db.SaveChangesAsync();
+                    return Json(new { IsSuccess=true, Message="Student Added Successfully", JsonRequestBehavior.AllowGet});
+                }
+
+                if (IsEnrolled)
+                {
+                    return Json(new { IsSuccess = false, Message = "Student Already Enrolled", JsonRequestBehavior.AllowGet });
+                }
+                else
+                    return Json(new { IsSuccess=false, Message="Failed to Add Student", JsonRequestBehavior.AllowGet});
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

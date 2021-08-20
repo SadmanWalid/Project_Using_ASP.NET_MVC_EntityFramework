@@ -1,4 +1,5 @@
 ﻿$(
+
     function () {
 
         $("#Student_firstName").autocomplete({
@@ -26,5 +27,24 @@
         });
 
 
+
+
+
+
+
+      
     }
+
+
+
+
 );
+
+
+
+
+
+
+
+
+
